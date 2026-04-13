@@ -1,11 +1,21 @@
 package org.example.bms.dto;
 
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ShowDto {
     private  Long id;
-    private LocalDateTime starttime;
-    private LocalDateTime endtime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private ScreenDto screen;
 
+private MovieDto movie;
+    private List<ShowSeatDto> availableSeats;
 }

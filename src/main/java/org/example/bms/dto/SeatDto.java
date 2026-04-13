@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SeatDto {
     private Long id;
-    private String seatno;
-    private String type;
-    private String baseprice;
+    private String seatNumber;
+    private String seatType;
+    private String basePrice;
 }

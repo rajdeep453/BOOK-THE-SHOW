@@ -13,4 +13,5 @@ public class ShowSeatDto {
     private SeatDto seat;
     private String status;
     private Double price;
+
 }
