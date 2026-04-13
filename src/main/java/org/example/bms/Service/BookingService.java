@@ -35,7 +35,7 @@ public class BookingService {
 List<ShowSeat> selectedSeats=showSeatRepository.findAllById(bookingRequest.getSeatIds());
 for(ShowSeat seat:selectedSeats){
     if(!"AVAILABLE".equals(seat.getStatus())){
-        throw new SeatUnavailableException("Seat "+ seat.getSeat().getSeatNumber() + "Is Not Avalable")
+        throw new SeatUnavailableException("Seat "+ seat.getSeat().getSeatNumber() + "Is Not Avalable");
     }
     seat.setStatus("Locked");
 }
@@ -131,6 +131,17 @@ return showSeatDtoDto;
 }).collect(Collectors.toList());
 bookingDto.setSeats(seatDtos);
 
+        if(booking.getPayment()!=null)
+        {
+            PaymentDto paymentDto=new PaymentDto();
+            paymentDto.setId(booking.getPayment().getId());
+            paymentDto.setAmount(booking.getPayment().getAmount());
+            paymentDto.setPaymentMethod(booking.getPayment().getPaymentMethod());
+            paymentDto.setPaymentTime(booking.getPayment().getPaymentTime());
+            paymentDto.setStatus(booking.getPayment().getStatus());
+            paymentDto.setTransactionId(booking.getPayment().getTransactionId());
+            bookingDto.setPayment(paymentDto);
+        }
         return bookingDto;
 
 
