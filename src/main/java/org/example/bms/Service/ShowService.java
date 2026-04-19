@@ -2,6 +2,7 @@ package org.example.bms.Service;
 
 
 import org.example.bms.dto.*;
+import org.example.bms.exception.ResourceNotFoundException;
 import org.example.bms.model.Movie;
 import org.example.bms.model.Screen;
 import org.example.bms.model.Show;
@@ -37,6 +38,15 @@ public class ShowService {
                 showSeatRepository.findByShowIdAndStatus(savedShow.getId(),"AVAILABLE");
 return mapToDto(savedShow,availableSeats);
     }
+    public ShowDto getShowById(Long id){
+        Show show=showRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Show not found  with id: "+id));
+        List<ShowSeat> availableSeats=showSeatRepository.findByShowIdAndStatus(id,"AVAILABLE");
+        return mapToDto(show,availableSeats);
+
+
+    }
+
 public ShowDto mapToDto(Show show,List<ShowSeat> availableSeats){
     ShowDto showDto=new ShowDto();
     showDto.setId(show.getId());
