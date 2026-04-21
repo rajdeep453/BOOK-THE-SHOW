@@ -46,7 +46,15 @@ return mapToDto(savedShow,availableSeats);
 
 
     }
-
+public List<ShowDto> getAllShows(){
+        List<Show> shows=showRepository.findAll();
+        return shows.stream().map(
+                show -> {
+                    List<ShowSeat> availableSeats=showSeatRepository.findByShowIdAndStatus(show.getId(),"AVAILABLE");
+                    return mapToDto(show,availableSeats);
+                }
+        ).toList();
+}
 public ShowDto mapToDto(Show show,List<ShowSeat> availableSeats){
     ShowDto showDto=new ShowDto();
     showDto.setId(show.getId());
@@ -99,4 +107,5 @@ showDto.setAvailableSeats(seatDtos);
     return showDto;
 
 }
+
 }
