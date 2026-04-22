@@ -10,6 +10,7 @@ import org.example.bms.model.ShowSeat;
 import org.example.bms.reposatory.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ShowService {
@@ -55,6 +56,36 @@ public List<ShowDto> getAllShows(){
                 }
         ).toList();
 }
+    public List<ShowDto> getShowsByMovie(Long movieId){
+        List<Show> shows=showRepository.findByMovieId(movieId);
+        return shows.stream().map(
+                show -> {
+                    List<ShowSeat> availableSeats=showSeatRepository.findByShowIdAndStatus(show.getId(),"AVAILABLE");
+                    return mapToDto(show,availableSeats);
+                }
+        ).toList();
+    }
+    public List<ShowDto> getShowsByMovieAndCity(Long movieId,String City){
+        List<Show> shows=showRepository.findByMovie_IdAndScreen_Theater_City(movieId,City);
+
+        return shows.stream().map(
+                show -> {
+                    List<ShowSeat> availableSeats=showSeatRepository.findByShowIdAndStatus(show.getId(),"AVAILABLE");
+                    return mapToDto(show,availableSeats);
+                }
+        ).toList();
+    }
+    public List<ShowDto> getShowsByDateRange(LocalDateTime startDate, LocalDateTime endDate){
+        List<Show> shows=showRepository.findByStartTimeBetween(startDate,endDate);
+
+        return shows.stream().map(
+                show -> {
+                    List<ShowSeat> availableSeats=showSeatRepository.findByShowIdAndStatus(show.getId(),"AVAILABLE");
+                    return mapToDto(show,availableSeats);
+                }
+        ).toList();
+    }
+
 public ShowDto mapToDto(Show show,List<ShowSeat> availableSeats){
     ShowDto showDto=new ShowDto();
     showDto.setId(show.getId());
