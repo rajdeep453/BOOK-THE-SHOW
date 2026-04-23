@@ -9,10 +9,11 @@ import org.example.bms.model.Show;
 import org.example.bms.model.ShowSeat;
 import org.example.bms.reposatory.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Service
 public class ShowService {
     @Autowired
     private MovieRepository movieRepository;
