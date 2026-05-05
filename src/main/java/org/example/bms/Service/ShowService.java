@@ -32,7 +32,9 @@ public class ShowService {
         show.setEndTime(showDto.getEndTime());
         Movie movie=movieRepository.findById(showDto.getMovie().getId()).orElseThrow(()->new RuntimeException("Movie Not Found"));
         show.setMovie(movie);
-        Screen screen=screenRepository.getById(showDto.getScreen().getId());
+       Screen screen = screenRepository.findById(showDto.getScreen().getId())
+                .orElseThrow(() -> new RuntimeException("Screen Not Found"));
+
         show.setScreen(screen);
         Show savedShow=showRepository.save(show);
 
